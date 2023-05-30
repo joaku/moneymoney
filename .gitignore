@@ -1,0 +1,27 @@
+# Dependency directories
+/node_modules
+/.node_repl_history
+
+# Build output
+/dist
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
