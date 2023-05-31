@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <h1>Inicio de sesión en Santander</h1>
-    
-    <form id="login-form">
-      <label for="rut">RUT:</label><br>
-      <input type="text" id="rut" name="rut"><br>
-      <label for="password">Password:</label><br>
-      <input type="password" id="password" name="password"><br>
-      <input type="submit" id="login-button" value="Iniciar sesión">
-    </form>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Santander Sync</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div id="login-form" class="card p-4">
+            <h2 class="mb-3">Ingrese sus credenciales</h2>
+            <form id="credentials-form">
+                <div class="mb-3">
+                    <label for="rut" class="form-label">RUT:</label>
+                    <input type="text" id="rut" name="rut" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="bank" class="form-label">Banco:</label>
+                    <select id="bank" name="bank" class="form-select">
+                        <option value="Santander">Santander</option>
+                    </select>
+                </div>
+                <button type="submit" id="save-credentials" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+        <div id="main-menu" class="card p-4 mt-5 d-flex flex-column align-items-center">
+    <h2 class="mb-3">Bienvenido de nuevo</h2>
+    <button id="sync-button" class="btn btn-primary mb-2">Sincronizar</button>
+    <button id="delete-button" class="btn btn-danger">Borrar credenciales</button>
+</div>
 
-    <p id="message"></p>
+        <p id="message" class="text-center mt-4"></p>
+    </div>
+    <script src="./js/renderer.js"></script>
+</body>
 
-    <script src="js/renderer.js"></script>
-  </body>
 </html>

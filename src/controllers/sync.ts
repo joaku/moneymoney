@@ -1,12 +1,16 @@
 import { ipcMain } from "electron";
 import { chromium } from "playwright-chromium";
-import { Session } from "../models";
+import { Session, Credential } from "../models";
 
 // Manejar el evento 'login'
-ipcMain.handle("login", async (event, rut: string, password: string) => {
-    //TO DO: Borrar
-    rut = rut != "" ? rut : process.env.SANTANDER_RUT || "";
-    password = password != "" ? password : process.env.SANTANDER_PASSWORD || "";
+ipcMain.handle("sync", async (event) => {
+    // Verificar si ya existen credenciales guardadas
+    const credentials: Credential | null = await Credential.findOne();
+
+    // Verificar si las credenciales son nulas
+    if (credentials === null) {
+        throw new Error("No se encontraron credenciales. Por favor, guarda tus credenciales antes de intentar iniciar sesión.");
+    }
 
     // Aquí va tu lógica de Playwright
     const browser = await chromium.launch();
@@ -14,9 +18,9 @@ ipcMain.handle("login", async (event, rut: string, password: string) => {
     await page.goto("https://banco.santander.cl/personas");
 
     await page.click("#btnIngresar");
-    await page.fill("input.input.rut", rut); // Usamos rut proporcionado por el usuario
+    await page.fill("input.input.rut", credentials.rut); // Usamos rut proporcionado por el usuario
     await page.click("input.input.pin");
-    await page.fill("input.input.pin", password); // Usamos la contraseña proporcionada por el usuario
+    await page.fill("input.input.pin", credentials.getPassword()); // Usamos la contraseña proporcionada por el usuario
 
     await Promise.all([page.waitForNavigation(), page.click("button.btn-login")]);
 
@@ -45,7 +49,7 @@ ipcMain.handle("login", async (event, rut: string, password: string) => {
     // Guardar la sesión en la base de datos
     const timestamp = new Date().toISOString(); // Obtiene la fecha y hora actual como un string en formato ISO
     await Session.create({
-        rut: rut,
+        rut: credentials.rut,
         type: "session",
         timestamp: timestamp,
     }).catch((error) => console.error("Error al insertar la sesión en la base de datos:", error));

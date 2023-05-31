@@ -1,17 +1,14 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
-
-require("dotenv").config();
-
-// Importar el controlador de inicio de sesión aquí
-import "./controllers/login";
+import "./controllers";
 
 function createWindow(): void {
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.resolve(__dirname, "preload/index.js"),
+            preload: path.resolve(__dirname, "preload/preload.js"),
+            contextIsolation: true,
         },
     });
 

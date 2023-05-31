@@ -6,7 +6,9 @@
 │  │  └── login.js
 │  ├── index.js
 │  ├── models
-│  │  └── index.js
+│  │  ├── Credential.js
+│  │  ├── index.js
+│  │  └── Session.js
 │  └── preload
 │    └── index.js
 ├── package-lock.json
