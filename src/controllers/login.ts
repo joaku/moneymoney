@@ -1,38 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
-const { chromium } = require("playwright");
-require("dotenv").config();
+import { ipcMain } from "electron";
+import { chromium } from "playwright-chromium";
+import { Session } from "../models";
 
-function createWindow() {
-    const mainWindow = new BrowserWindow({
-        width: 1366,
-        height: 768,
-        webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
-        },
-    });
-
-    mainWindow.loadFile("index.html");
-    mainWindow.webContents.openDevTools();
-}
-
-app.whenReady().then(() => {
-    createWindow();
-
-    app.on("activate", function () {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
-});
-
-app.on("window-all-closed", function () {
-    if (process.platform !== "darwin") app.quit();
-});
-
-// Maneja el evento 'login'
-ipcMain.handle("login", async (event, rut, password) => {
+// Manejar el evento 'login'
+ipcMain.handle("login", async (event, rut: string, password: string) => {
     //TO DO: Borrar
-    rut = rut != "" ? rut : process.env.SANTANDER_RUT;
-    password = password != "" ? password : process.env.SANTANDER_PASSWORD;
+    rut = rut != "" ? rut : process.env.SANTANDER_RUT || "";
+    password = password != "" ? password : process.env.SANTANDER_PASSWORD || "";
 
     // Aquí va tu lógica de Playwright
     const browser = await chromium.launch();
@@ -64,9 +38,17 @@ ipcMain.handle("login", async (event, rut, password) => {
     }
 
     await targetFrame.waitForSelector("span#idspan1");
-    const welcomeMessage = await targetFrame.$eval("span#idspan1", (span) => span.innerText);
+    const welcomeMessage = await targetFrame.$eval("span#idspan1", (span) => (span as HTMLElement).innerText);
 
     await browser.close();
+
+    // Guardar la sesión en la base de datos
+    const timestamp = new Date().toISOString(); // Obtiene la fecha y hora actual como un string en formato ISO
+    await Session.create({
+        rut: rut,
+        type: "session",
+        timestamp: timestamp,
+    }).catch((error) => console.error("Error al insertar la sesión en la base de datos:", error));
 
     console.log(welcomeMessage);
     return welcomeMessage;

@@ -1,0 +1,28 @@
+├── .env
+├── .gitignore
+├── .tree
+├── dist
+│  ├── controllers
+│  │  └── login.js
+│  ├── index.js
+│  ├── models
+│  │  └── index.js
+│  └── preload
+│    └── index.js
+├── package-lock.json
+├── package.json
+├── public
+│  ├── index.html
+│  ├── js
+│  │  └── renderer.js
+│  └── styles
+│    └── styles.css
+├── src
+│  ├── controllers
+│  │  └── login.ts
+│  ├── index.ts
+│  ├── models
+│  │  └── index.ts
+│  └── preload
+│    └── index.ts
+└── tsconfig.json
