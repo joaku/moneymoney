@@ -4,6 +4,7 @@
 
 # Build output
 /dist
+/build
 
 # Logs
 npm-debug.log*

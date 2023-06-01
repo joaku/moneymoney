@@ -1,4 +1,2 @@
-import "./getCredentials";
-import "./saveCredentials";
-import "./deleteCredentials";
+import "./credential";
 import "./sync";

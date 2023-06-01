@@ -2,15 +2,6 @@
 ├── .gitignore
 ├── .tree
 ├── dist
-│  ├── controllers
-│  │  └── login.js
-│  ├── index.js
-│  ├── models
-│  │  ├── Credential.js
-│  │  ├── index.js
-│  │  └── Session.js
-│  └── preload
-│    └── index.js
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -21,10 +12,21 @@
 │    └── styles.css
 ├── src
 │  ├── controllers
-│  │  └── login.ts
+│  │  ├── deleteCredentials.ts
+│  │  ├── getCredentials.ts
+│  │  ├── index.ts
+│  │  ├── saveCredentials.ts
+│  │  └── sync.ts
 │  ├── index.ts
 │  ├── models
-│  │  └── index.ts
+│  │  ├── bank.ts
+│  │  ├── category.ts
+│  │  ├── credential.ts
+│  │  ├── index.ts
+│  │  ├── product.ts
+│  │  ├── session.ts
+│  │  ├── transaction.ts
+│  │  └── transactionCategory.ts
 │  └── preload
-│    └── index.ts
+│    └── preload.ts
 └── tsconfig.json

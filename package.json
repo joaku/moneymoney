@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "preelectron-pack": "npm run build",
     "start": "electron ./dist/index.js",
-    "package": "electron-packager . MoneyMoney --platform=win32 --arch=x64 --out=dist"
+    "package": "electron-packager . MoneyMoney --platform=win32 --arch=x64 --out=build --overwrite"
   },
   "keywords": [],
   "author": "",
