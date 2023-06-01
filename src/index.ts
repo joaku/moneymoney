@@ -4,8 +4,9 @@ import "./controllers";
 
 function createWindow(): void {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
+        autoHideMenuBar: true,
         webPreferences: {
             preload: path.resolve(__dirname, "preload/preload.js"),
             contextIsolation: true,

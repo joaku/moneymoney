@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Santander Sync</title>
-    <link rel="stylesheet" href="styles/styles.css" />
-  </head>
-<body class="bg-light">
-    <div class="container py-5">
-        <div id="login-form" class="card p-4">
-            <h2 class="mb-3">Ingrese sus credenciales</h2>
-            <form id="credentials-form">
-                <div class="mb-3">
-                    <label for="rut" class="form-label">RUT:</label>
-                    <input type="text" id="rut" name="rut" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña:</label>
-                    <input type="password" id="password" name="password" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="bank" class="form-label">Banco:</label>
-                    <select id="bank" name="bank" class="form-select">
-                        <option value="Santander">Santander</option>
-                    </select>
-                </div>
-                <button type="submit" id="save-credentials" class="btn btn-primary">Guardar</button>
-            </form>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Money Money</title>
+        <link rel="stylesheet" href="styles/styles.css" />
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    </head>
+    <body class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white px-2">
+            <a class="navbar-brand" href="#">Money^2</a>
+            <div class="navbar-collapse" id="navbarNav">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="banks-tab" data-bs-toggle="tab" data-bs-target="#banks-view" type="button" role="tab" aria-controls="banks" aria-selected="true">Bancos</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories-view" type="button" role="tab" aria-controls="categories" aria-selected="false">Categorías</a>
+                    </li>
+                    <!-- Aquí puedes continuar agregando tus elementos de menú como tabs -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Contenedor principal -->
+        <div class="container mt-5 tab-content" id="myTabContent">
+            <!-- Vista de Bancos -->
+            <div id="banks-view" class="tab-pane fade show active view bg-white p-4 rounded" role="tabpanel" aria-labelledby="banks-tab">
+                <h2 class="mb-3">Bancos</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody id="banks-table-body">
+                        <!-- Los datos de los bancos se insertarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Vista de Categorías -->
+            <div id="categories-view" class="tab-pane fade view bg-white p-4 rounded mt-4" role="tabpanel" aria-labelledby="categories-tab">
+                <h2 class="mb-3">Categorías</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categories-table-body">
+                        <!-- Los datos de las categorías se insertarán aquí -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div id="main-menu" class="card p-4 mt-5 d-flex flex-column align-items-center">
-    <h2 class="mb-3">Bienvenido de nuevo</h2>
-    <button id="sync-button" class="btn btn-primary mb-2">Sincronizar</button>
-    <button id="delete-button" class="btn btn-danger">Borrar credenciales</button>
-</div>
 
-        <p id="message" class="text-center mt-4"></p>
-    </div>
-    <script src="./js/renderer.js"></script>
-</body>
-
+        <script type="module" src="./js/renderer.js"></script>
+    </body>
 </html>
