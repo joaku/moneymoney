@@ -12,6 +12,8 @@ Ejecuta npm install para instalar todas las dependencias necesarias.
 Con eso debería ser suficiente para tener todo listo y funcionando.
 
 ```bash
+git clone https://github.com/joaku/money-money.git
+cd money-money
 npm install
 ```
 
