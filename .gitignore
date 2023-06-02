@@ -5,6 +5,7 @@
 # Build output
 /dist
 /build
+/installer
 
 # Logs
 npm-debug.log*

@@ -1,15 +1,8 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+const { Sequelize, DataTypes, Model } = require("sequelize");
 
-export class Session extends Model {
-    public id!: number;
-    public rut!: string;
-    public type!: string;
-    public timestamp!: Date;
-    public createdAt!: Date;
-    public updatedAt!: Date;
-}
+class Session extends Model {}
 
-export function initSession(sequelize: Sequelize) {
+function initSession(sequelize) {
     Session.init(
         {
             id: {
@@ -30,16 +23,14 @@ export function initSession(sequelize: Sequelize) {
                 allowNull: false,
             },
             createdAt: {
-                // Agregar la columna "createdAt"
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"), // Valor por defecto: fecha y hora actual
+                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
             },
             updatedAt: {
-                // Agregar la columna "updatedAt"
                 type: DataTypes.DATE,
                 allowNull: false,
-                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"), // Valor por defecto: fecha y hora actual
+                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
             },
         },
         {
@@ -47,4 +38,7 @@ export function initSession(sequelize: Sequelize) {
             sequelize: sequelize,
         }
     );
+    return Session;
 }
+
+module.exports = { Session, initSession };

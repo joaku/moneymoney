@@ -1,10 +1,10 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import crypto from "crypto";
+const { Sequelize, DataTypes, Model } = require("sequelize");
+const crypto = require("crypto");
 
-const ENCRYPTION_KEY = Buffer.from("abcdefghijklmnopqrstuvwxyandres9", "utf8"); // Deberías guardar esta clave en un lugar seguro y privado
-const IV_LENGTH = 16; // Para AES, esto siempre es 16
+const ENCRYPTION_KEY = Buffer.from("abcdefghijklmnopqrstuvwxyandres9", "utf8");
+const IV_LENGTH = 16;
 
-function encrypt(text: string): string {
+function encrypt(text) {
     let iv = crypto.randomBytes(IV_LENGTH);
     let cipher = crypto.createCipheriv("aes-256-cbc", ENCRYPTION_KEY, iv);
     let encrypted = cipher.update(text);
@@ -14,9 +14,9 @@ function encrypt(text: string): string {
     return iv.toString("hex") + ":" + encrypted.toString("hex");
 }
 
-function decrypt(text: string): string {
+function decrypt(text) {
     let textParts = text.split(":");
-    let iv = Buffer.from(textParts.shift()!, "hex");
+    let iv = Buffer.from(textParts.shift(), "hex");
     let encryptedText = Buffer.from(textParts.join(":"), "hex");
     let decipher = crypto.createDecipheriv("aes-256-cbc", ENCRYPTION_KEY, iv);
     let decrypted = decipher.update(encryptedText);
@@ -26,22 +26,17 @@ function decrypt(text: string): string {
     return decrypted.toString();
 }
 
-export class Credential extends Model {
-    public id!: number;
-    public rut!: string;
-    public password!: string;
-    public bank!: string;
-
-    public setPassword(value: string): void {
+class Credential extends Model {
+    setPassword(value) {
         this.password = encrypt(value);
     }
 
-    public getPassword(): string {
+    getPassword() {
         return decrypt(this.password);
     }
 }
 
-export function initCredential(sequelize: Sequelize) {
+function initCredential(sequelize) {
     Credential.init(
         {
             id: {
@@ -68,3 +63,8 @@ export function initCredential(sequelize: Sequelize) {
         }
     );
 }
+
+module.exports = {
+    Credential,
+    initCredential,
+};

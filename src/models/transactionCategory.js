@@ -1,12 +1,8 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+const { Sequelize, DataTypes, Model } = require("sequelize");
 
-export class TransactionCategory extends Model {
-    public transactionId!: number;
-    public categoryId!: number;
-    public amount!: number;
-}
+class TransactionCategory extends Model {}
 
-export function initTransactionCategory(sequelize: Sequelize) {
+function initTransactionCategory(sequelize) {
     TransactionCategory.init(
         {
             transactionId: {
@@ -29,4 +25,7 @@ export function initTransactionCategory(sequelize: Sequelize) {
             sequelize: sequelize,
         }
     );
+    return TransactionCategory;
 }
+
+module.exports = { TransactionCategory, initTransactionCategory };

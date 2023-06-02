@@ -1,5 +1,5 @@
-import { ipcMain } from "electron";
-import { Transaction } from "../models";
+const { ipcMain } = require("electron");
+const { Transaction } = require("../models/index.js");
 
 ipcMain.handle("get-transactions", async () => {
     const transactions = await Transaction.findAll();
@@ -8,23 +8,13 @@ ipcMain.handle("get-transactions", async () => {
 
 ipcMain.handle("create-transaction", async (event, data) => {
     const { productId, transactionType, status, amount, transactionDate } = data;
-
-    const newTransaction = await Transaction.create({
-        productId,
-        transactionType,
-        status,
-        amount,
-        transactionDate,
-    });
-
+    const newTransaction = await Transaction.create({ productId, transactionType, status, amount, transactionDate });
     event.sender.send("transactions-changed");
-
     return { success: true };
 });
 
 ipcMain.handle("update-transaction", async (event, data) => {
     const { id, productId, transactionType, status, amount, transactionDate } = data;
-
     const existingTransaction = await Transaction.findByPk(id);
     if (existingTransaction) {
         existingTransaction.productId = productId;
@@ -33,9 +23,7 @@ ipcMain.handle("update-transaction", async (event, data) => {
         existingTransaction.amount = amount;
         existingTransaction.transactionDate = transactionDate;
         await existingTransaction.save();
-
         event.sender.send("transactions-changed");
-
         return { success: true };
     } else {
         return { success: false, message: "Transaction not found" };
@@ -46,9 +34,7 @@ ipcMain.handle("delete-transaction", async (event, id) => {
     const existingTransaction = await Transaction.findByPk(id);
     if (existingTransaction) {
         await existingTransaction.destroy();
-
         event.sender.send("transactions-changed");
-
         return { success: true };
     } else {
         return { success: false, message: "Transaction not found" };

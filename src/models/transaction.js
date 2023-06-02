@@ -1,15 +1,8 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+const { Sequelize, DataTypes, Model } = require("sequelize");
 
-export class Transaction extends Model {
-    public id!: number;
-    public productId!: number;
-    public transactionType!: string;
-    public status!: string;
-    public amount!: number;
-    public transactionDate!: Date;
-}
+class Transaction extends Model {}
 
-export function initTransaction(sequelize: Sequelize) {
+function initTransaction(sequelize) {
     Transaction.init(
         {
             id: {
@@ -43,4 +36,7 @@ export function initTransaction(sequelize: Sequelize) {
             sequelize: sequelize,
         }
     );
+    return Transaction;
 }
+
+module.exports = { Transaction, initTransaction };

@@ -1,12 +1,8 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+const { Sequelize, DataTypes, Model } = require("sequelize");
 
-export class Product extends Model {
-    public id!: number;
-    public name!: string;
-    public bankId!: number;
-}
+class Product extends Model {}
 
-export function initProduct(sequelize: Sequelize) {
+function initProduct(sequelize) {
     Product.init(
         {
             id: {
@@ -28,4 +24,7 @@ export function initProduct(sequelize: Sequelize) {
             sequelize: sequelize,
         }
     );
+    return Product;
 }
+
+module.exports = { Product, initProduct };
